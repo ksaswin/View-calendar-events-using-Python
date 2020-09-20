@@ -39,7 +39,7 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    start_date = datetime.datetime.today().isoformat() + 'Z'
+    start_date = (datetime.datetime.today() + datetime.timedelta(days=-1)).isoformat() + 'Z'
     end_date = (datetime.datetime.today() + datetime.timedelta(days=6)).isoformat() + 'Z'
 
     eventsResult = service.events().list(

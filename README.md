@@ -14,5 +14,3 @@ google-auth-oauthlib.
 Paste the credentials.json file in the same directory
 where you have stored this python file.
 
-When you run it for the first time, you will have to 
-login to your Google account for verification.

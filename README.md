@@ -3,14 +3,14 @@ Using python to list your weekly events in your Google calendar.
 This program finds events in your Google calendar.
 
 Enable Google Calendar API.
-You shall be promoted to download a file named credentials.json
-Download that file.
+You shall be promoted to download a file named **_credentials.json_**. Download it.
 
-You'll need to install the following modules:
-google-api-python-client,
-google-auth-httplib2,
-google-auth-oauthlib.
+```
+pip install -r requirements.txt
+```
+If you are on a windows machine:
+```
+python -m pip install -r requirements.txt
+```
 
-Paste the credentials.json file in the same directory
-where you have stored this python file.
-
+Paste the **_credentials.json_** file in the same directory where you stored this python file.

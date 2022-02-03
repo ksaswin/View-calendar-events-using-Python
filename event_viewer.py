@@ -9,13 +9,13 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-def elist(events, el1):
-    l = list()
-    for event in events:
-        et = (event['start'].get('dateTime')[5:10])
-        if et == el1:
-            l.append(event['summary'])
-    return l
+def events_lister(all_events, month_date):
+    events_list = list()
+    for event in all_events:
+        event_date = (event['start'].get('dateTime')[5:10])
+        if event_date == month_date:
+            events_list.append(event['summary'])
+    return events_list
 
 def main():
     creds = None
@@ -48,31 +48,31 @@ def main():
         timeMax=end_date,
         singleEvents=True,
         orderBy='startTime').execute()
-    events = eventsResult.get('items', [])
+    all_events = eventsResult.get('items', [])
 
     count = 0
-    for t in range(int(datetime.datetime.today().strftime("%d")),
+    for dates in range(int(datetime.datetime.today().strftime("%d")),
                    int((datetime.datetime.today() + datetime.timedelta(days=7)).strftime("%d"))):
         print("-" * 50)
         if count == 0:
-            el1 = (datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%m-%d")
-            el = elist(events, el1)
-            if not el:
+            month_date = (datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%m-%d")
+            list_of_events = events_lister(all_events, month_date)
+            if not list_of_events:
                 print("Today  No events scheduled.")
             else:
                 print("Today  ", end="")
-                print(*el, sep=", ")
+                print(*list_of_events, sep=", ")
 
         else:
-            el1 = (datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%m-%d")
-            el = elist(events, el1)
-            if not el:
+            month_date = (datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%m-%d")
+            list_of_events = events_lister(all_events, month_date)
+            if not list_of_events:
                 print((datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%a, %b %d "),
                       "No events scheduled.")
             else:
                 print((datetime.datetime.today() + datetime.timedelta(days=count)).strftime("%a, %b %d  "),
                       end="")
-                print(*el, sep=", ")
+                print(*list_of_events, sep=", ")
         count += 1
     print("-" * 50)
 
